@@ -1,11 +1,11 @@
 {
-    "compilerOptions": {
-        "importHelpers": true,
-        "module": "esnext",
-        "moduleResolution": "node",
-        "target": "es5"
-    },
-    "exclude": [
-        "node_modules"
-    ],
+  "compilerOptions": {
+    "importHelpers": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "target": "es5"
+  },
+  "exclude": [
+    "node_modules"
+  ],
 }
