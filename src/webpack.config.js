@@ -16,7 +16,7 @@ const commonConfig = {
 
 const clientConfig = {
   ...commonConfig,
-  entry: ['webpack-hot-middleware/client', './app/client.tsx'],
+  entry: ['webpack-hot-middleware/client', './app/client.ts'],
   output: {
     path: path.resolve(__dirname, 'client'),
     filename: 'client.js',
@@ -26,7 +26,7 @@ const clientConfig = {
 
 const serverConfig = {
   ...commonConfig,
-  entry: './app/server.tsx',
+  entry: './app/server.ts',
   output: {
     libraryTarget: 'commonjs',
     path: path.resolve(__dirname, 'server'),
