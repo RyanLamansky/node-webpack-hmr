@@ -1,4 +1,5 @@
 // @ts-check
+/* eslint-disable @typescript-eslint/no-var-requires */
 const { resolve } = require('path');
 const { HotModuleReplacementPlugin, } = require('webpack');
 
@@ -23,7 +24,7 @@ const commonConfig = {
 /** @type {import("webpack").Configuration} */
 const clientConfig = {
   ...commonConfig,
-  entry: isDevMode ? ['webpack-hot-middleware/client', './app/client.ts'] : ['./app/client.ts'],
+  entry: isDevMode ? ['webpack-hot-middleware/client', './client.ts'] : ['./client.ts'],
   output: {
     path: resolve(__dirname, isDevMode ? 'client' : 'build/client'),
     filename: 'client.js',
@@ -34,7 +35,7 @@ const clientConfig = {
 /** @type {import("webpack").Configuration} */
 const serverConfig = {
   ...commonConfig,
-  entry: isDevMode ? './app/server.ts' : './productionStart.ts',
+  entry: isDevMode ? './server.ts' : './productionStart.ts',
   output: {
     libraryTarget: 'commonjs',
     path: resolve(__dirname, isDevMode ? 'server' : 'build/server'),

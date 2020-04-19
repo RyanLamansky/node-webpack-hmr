@@ -17,7 +17,7 @@ A recent version of Node is required.
 Visual Studio Code is not required, but everything is pre-configured for it.
 
 1. Clone this repository
-1. From /src directory, run `npm install`
+1. From the repo root, run `npm install`
 1. Use Visual Studio Code to "Open Folder" on the repo root
 1. Run the project via Debug -> Start Debugging (or Start Without Debugging)
 1. Access the running site at http://localhost:3000/
@@ -26,12 +26,12 @@ Note: Running without debugging will improve the performance of Node but will di
 
 ## Structure
 
-- For the most part, your working directory is /src, relative to the repo root.  The rest of this list is relative to /src.
-- Client and server code are in the /app folder, inside the client.ts and server.ts files.
-  - During development, edits to either of these files are "hot"--the client JS is reloaded and it is re-run in-place without refreshing the page.  Server edits are apparent on the next HTTP request.
+Source code is in the /src folder.
+
+- During development, edits to files referenced via client.ts and server.ts are "hot"--the client JS is reloaded and it is re-run in-place without refreshing the page.  Server edits are apparent on the next HTTP request.
 - package.json is the NPM package list.  The included items are the bare minimum.
 - start.js is the Node entry point for development.  It creates two webpack middleware instances--one for the client bundle, and one for the server bundle--and runs them simultaneously.
-- tsconfig.json is the TypeScript configuration.
+- productionStart.ts is the entry point for production builds.
 - webpack.config.js is the script file that configures webpack.
 
 ## Extending

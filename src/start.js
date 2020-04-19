@@ -1,4 +1,6 @@
 // @ts-check
+/* eslint-disable @typescript-eslint/no-var-requires */
+/* eslint-disable @typescript-eslint/ban-ts-ignore */
 const timerName = 'Startup';
 console.time(timerName);
 console.log('Starting...');
@@ -10,6 +12,7 @@ const webpack = require('webpack');
 const clientCompiler = webpack(clientConfig);
 const serverCompiler = webpack(serverConfig);
 
+/** @type { import('webpack').Options.Stats} */
 const stats = {
   builtAt: false,
   colors: true,
