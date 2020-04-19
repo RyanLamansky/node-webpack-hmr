@@ -22,8 +22,8 @@
       "type": "node",
       "request": "launch",
       "name": "Run Production",
-      "program": "${workspaceFolder}/build/server/server.js",
-      "cwd": "${workspaceFolder}/build/",
+      "program": "${workspaceFolder}/src/build/server/server.js",
+      "cwd": "${workspaceFolder}/src/build/",
       "env": {
         "NODE_ENV": "production"
       },
