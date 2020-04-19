@@ -2,6 +2,7 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const { resolve } = require("path");
 const { HotModuleReplacementPlugin, DefinePlugin, } = require("webpack");
+const TerserPlugin = require("terser-webpack-plugin");
 
 const isDevMode = process.env.NODE_ENV !== "production";
 
@@ -28,7 +29,7 @@ const createModule = (target = "ES5") => ({
 /** @type {import("webpack").Configuration} */
 const commonConfig = {
   mode: isDevMode ? "development" : "production",
-  devtool: isDevMode ? "inline-source-map" : "source-map",
+  devtool: "source-map",
   resolve: {
     extensions: [".ts", ".tsx", ".js"]
   },
@@ -45,6 +46,16 @@ const createClientConfig = (name, target = "ES5") => {
       filename: `${name}.js`,
     },
     plugins: isDevMode ? [new HotModuleReplacementPlugin()] : [],
+    optimization: {
+      minimizer: [
+        new TerserPlugin({
+          sourceMap: true,
+          terserOptions: {
+            ecma: 2019,
+          }
+        }),
+      ],
+    },
   };
   return clientConfig;
 };
@@ -52,6 +63,7 @@ const createClientConfig = (name, target = "ES5") => {
 /** @type {import("webpack").Configuration} */
 const serverConfig = {
   ...commonConfig,
+  devtool: isDevMode ? undefined : "source-map",
   module: createModule("ES2019"),
   entry: isDevMode ? "./entry/server.ts" : "./productionStart.ts",
   output: {

@@ -6,7 +6,10 @@
       "request": "launch",
       "name": "Run Development Mode",
       "program": "${workspaceFolder}/src/start.js",
-      "cwd": "${workspaceFolder}/src/"
+      "cwd": "${workspaceFolder}/src/",
+      "runtimeArgs": [
+        "--unhandled-rejections=warn",
+      ],
     },
     {
       "type": "node",
@@ -24,6 +27,10 @@
       "name": "Run Production",
       "program": "${workspaceFolder}/src/build/server/server.js",
       "cwd": "${workspaceFolder}/src/build/",
+      "runtimeArgs": [
+        "--enable-source-maps",
+        "--unhandled-rejections=strict",
+      ],
       "env": {
         "NODE_ENV": "production"
       },

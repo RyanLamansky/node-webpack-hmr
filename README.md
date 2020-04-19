@@ -10,6 +10,8 @@ It's intended to be useful for beginners and experts alike.
 - JS bundles are assembled by Webpack
 - Hot module replacement enabled for both server-side and client-side JS bundles
 - TypeScript-enabled
+- Modern browsers receive ES2019 code, legacy ones receive ES5, meaning Internet Explorer 11 can work
+- Production builds use Node's cluster API for higher concurrency and resilience to faults.
 
 ## Getting Started
 

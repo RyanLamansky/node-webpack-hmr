@@ -1,20 +1,34 @@
-const timerName = "Startup";
-console.time(timerName);
-console.log("Starting...");
-
+import cluster from "cluster";
+import { cpus } from "os";
 import express from "express";
-
-const app = express();
-app.disable("etag");
-app.disable("x-powered-by");
-
 import server from "./entry/server";
 
-app.use(express.static("client"));
-app.use(server);
+if (cluster.isMaster) {
+  const timerName = "Ready";
+  console.time(timerName);
 
-const port = 3000;
-app.listen(port, () => {
-  console.log(`Startup complete, listening on port ${port}.`);
-  console.timeEnd(timerName);
-});
+  let count = 0;
+  cpus().forEach(() => {
+    count++;
+    cluster.fork().once("listening", () => {
+      count--;
+      if (!count) {
+        console.timeEnd(timerName);
+      }
+    });
+  });
+
+  cluster.on("exit", (worker, code, signal) => {
+    console.warn(`Worker ${worker.id} exited with code ${code} and signal ${signal}.`);
+    cluster.fork();
+  });
+} else{
+  const app = express();
+  app.disable("etag");
+  app.disable("x-powered-by");
+
+  app.use(express.static("client"));
+  app.use(server);
+
+  app.listen(3000);
+}
