@@ -8,7 +8,7 @@ const app = express();
 app.disable("etag");
 app.disable("x-powered-by");
 
-import server from "./server";
+import server from "./entry/server";
 
 app.use(express.static("client"));
 app.use(server);

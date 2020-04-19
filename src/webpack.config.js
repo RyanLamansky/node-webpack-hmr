@@ -34,23 +34,26 @@ const commonConfig = {
   },
 };
 
-/** @type {import("webpack").Configuration} */
-const clientConfig = {
-  ...commonConfig,
-  module: createModule(),
-  entry: isDevMode ? ["webpack-hot-middleware/client", "./client.ts"] : ["./client.ts"],
-  output: {
-    path: resolve(__dirname, isDevMode ? "client" : "build/client"),
-    filename: "client.js",
-  },
-  plugins: isDevMode ? [new HotModuleReplacementPlugin()] : [],
+const createClientConfig = (name, target = "ES5") => {
+  /** @type {import("webpack").Configuration} */
+  const clientConfig = {
+    ...commonConfig,
+    module: createModule(target),
+    entry: isDevMode ? ["webpack-hot-middleware/client", "./entry/client.ts"] : ["./entry/client.ts"],
+    output: {
+      path: resolve(__dirname, isDevMode ? "client" : "build/client"),
+      filename: `${name}.js`,
+    },
+    plugins: isDevMode ? [new HotModuleReplacementPlugin()] : [],
+  };
+  return clientConfig;
 };
 
 /** @type {import("webpack").Configuration} */
 const serverConfig = {
   ...commonConfig,
   module: createModule("ES2019"),
-  entry: isDevMode ? "./server.ts" : "./productionStart.ts",
+  entry: isDevMode ? "./entry/server.ts" : "./productionStart.ts",
   output: {
     libraryTarget: "commonjs",
     path: resolve(__dirname, isDevMode ? "server" : "build/server"),
@@ -62,4 +65,4 @@ const serverConfig = {
   },
 };
 
-module.exports = [clientConfig, serverConfig];
+module.exports = [createClientConfig("modern", "ES2019"), createClientConfig("legacy", "ES5"), serverConfig];

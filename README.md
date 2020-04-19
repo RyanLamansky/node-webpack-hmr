@@ -28,7 +28,7 @@ Note: Running without debugging will improve the performance of Node but will di
 
 Source code is in the /src folder.
 
-- During development, edits to files referenced via client.ts and server.ts are "hot"--the client JS is reloaded and it is re-run in-place without refreshing the page.  Server edits are apparent on the next HTTP request.
+- During development, edits to files referenced via entry/client.ts and entry/server.ts are "hot"--the client JS is reloaded and it is re-run in-place without refreshing the page.  Server edits are apparent on the next HTTP request.
 - package.json is the NPM package list.  The included items are the bare minimum.
 - start.js is the Node entry point for development.  It creates two webpack middleware instances--one for the client bundle, and one for the server bundle--and runs them simultaneously.
 - productionStart.ts is the entry point for production builds.

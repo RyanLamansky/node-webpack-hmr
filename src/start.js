@@ -6,10 +6,12 @@ console.time(timerName);
 console.log("Starting...");
 
 const webpackConfig = require("./webpack.config");
-const clientConfig = webpackConfig[0];
-const serverConfig = webpackConfig[1];
+const modernConfig = webpackConfig[0];
+const legacyConfig = webpackConfig[1];
+const serverConfig = webpackConfig[2];
 const webpack = require("webpack");
-const clientCompiler = webpack(clientConfig);
+const modernCompiler = webpack(modernConfig);
+const legacyCompiler = webpack(legacyConfig);
 const serverCompiler = webpack(serverConfig);
 
 /** @type { import('webpack').Options.Stats} */
@@ -26,7 +28,12 @@ const stats = {
 
 const webpackDevMiddleware = require("webpack-dev-middleware");
 
-const clientWebpackDevMiddleware = webpackDevMiddleware(clientCompiler, {
+const modernWebpackDevMiddleware = webpackDevMiddleware(modernCompiler, {
+  stats,
+  publicPath: "/",
+});
+
+const legacyWebpackDevMiddleware = webpackDevMiddleware(legacyCompiler, {
   stats,
   publicPath: "/",
 });
@@ -42,9 +49,11 @@ const app = require("express")().disable("etag").disable("x-powered-by");
 const webpackHotMiddleware = require("webpack-hot-middleware");
 
 app
-  .use(clientWebpackDevMiddleware)
+  .use(modernWebpackDevMiddleware)
+  .use(legacyWebpackDevMiddleware)
   .use(serverWebpackDevMiddleware)
-  .use(webpackHotMiddleware(clientCompiler))
+  .use(webpackHotMiddleware(modernCompiler))
+  .use(webpackHotMiddleware(legacyCompiler))
   .use(webpackHotMiddleware(serverCompiler))
   ;
 
@@ -92,7 +101,8 @@ process.emitWarning = function (warning, type, code) {
   originalEmitWarning(warning, type, code);
 };
 
-clientWebpackDevMiddleware.waitUntilValid(() =>
+modernWebpackDevMiddleware.waitUntilValid(() =>
+legacyWebpackDevMiddleware.waitUntilValid(() =>
   serverWebpackDevMiddleware.waitUntilValid(() => {
     const port = 3000;
     app.listen(port, () => {
@@ -100,4 +110,4 @@ clientWebpackDevMiddleware.waitUntilValid(() =>
       console.timeEnd(timerName);
     });
   })
-);
+));
