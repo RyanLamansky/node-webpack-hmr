@@ -7,6 +7,26 @@
       "name": "Launch Program",
       "program": "${workspaceFolder}/src/start.js",
       "cwd": "${workspaceFolder}/src/"
-    }
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Build Production",
+      "program": "${workspaceFolder}/src/node_modules/webpack/bin/webpack.js",
+      "cwd": "${workspaceFolder}/src/",
+      "env": {
+        "NODE_ENV": "production"
+      },
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Run Production",
+      "program": "${workspaceFolder}/src/build/server/server.js",
+      "cwd": "${workspaceFolder}/src/build/",
+      "env": {
+        "NODE_ENV": "production"
+      },
+    },
   ]
 }

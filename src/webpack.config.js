@@ -1,9 +1,15 @@
-const path = require('path');
-const webpack = require('webpack');
+// @ts-check
+const { resolve } = require('path');
+const { HotModuleReplacementPlugin, } = require('webpack');
 
+ const isDevMode = process.env.NODE_ENV !== 'production';
+
+console.log(`Webpack running in ${isDevMode ? 'development' : 'production'} mode.`)
+
+/** @type {import("webpack").Configuration} */
 const commonConfig = {
-  mode: 'development',
-  devtool: 'inline-source-map',
+  mode: isDevMode ? 'development' : 'production',
+  devtool: isDevMode ? 'inline-source-map' : 'source-map',
   resolve: {
     extensions: ['.ts', '.tsx', '.js']
   },
@@ -11,26 +17,32 @@ const commonConfig = {
     rules: [
       { test: /\.tsx?$/, loader: 'ts-loader' }
     ]
-  }
+  },
 };
 
+/** @type {import("webpack").Configuration} */
 const clientConfig = {
   ...commonConfig,
-  entry: ['webpack-hot-middleware/client', './app/client.ts'],
+  entry: isDevMode ? ['webpack-hot-middleware/client', './app/client.ts'] : ['./app/client.ts'],
   output: {
-    path: path.resolve(__dirname, 'client'),
+    path: resolve(__dirname, isDevMode ? 'client' : 'build/client'),
     filename: 'client.js',
   },
-  plugins: [new webpack.HotModuleReplacementPlugin()],
+  plugins: isDevMode ? [new HotModuleReplacementPlugin()] : [],
 };
 
+/** @type {import("webpack").Configuration} */
 const serverConfig = {
   ...commonConfig,
-  entry: './app/server.ts',
+  entry: isDevMode ? './app/server.ts' : './productionStart.ts',
   output: {
     libraryTarget: 'commonjs',
-    path: path.resolve(__dirname, 'server'),
+    path: resolve(__dirname, isDevMode ? 'server' : 'build/server'),
     filename: 'server.js',
+  },
+  target: "node",
+  optimization: {
+    minimize: false,
   },
 };
 
