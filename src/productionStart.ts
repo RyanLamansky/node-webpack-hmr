@@ -1,16 +1,16 @@
-const timerName = 'Startup';
+const timerName = "Startup";
 console.time(timerName);
-console.log('Starting...');
+console.log("Starting...");
 
-import express from 'express';
+import express from "express";
 
 const app = express();
-app.disable('etag');
-app.disable('x-powered-by');
+app.disable("etag");
+app.disable("x-powered-by");
 
-import server from './server';
+import server from "./server";
 
-app.use(express.static('client'));
+app.use(express.static("client"));
 app.use(server);
 
 const port = 3000;

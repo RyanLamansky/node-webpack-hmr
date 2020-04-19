@@ -1,4 +1,10 @@
 {
   "editor.tabSize": 2,
-  "editor.detectIndentation": false
+  "editor.detectIndentation": false,
+  "editor.codeActionsOnSave": {
+    "source.fixAll": true
+  },
+  "javascript.format.semicolons": "insert",
+  "javascript.preferences.quoteStyle": "double",
+  "typescript.preferences.quoteStyle": "double"
 }

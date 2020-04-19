@@ -1,6 +1,6 @@
-const appRoot = document.getElementById('app-root')
+const appRoot = document.getElementById("app-root");
 if (appRoot) {
-  appRoot.innerText = 'Loaded!';
+  appRoot.innerText = "Loaded!";
 }
 
 if (module.hot) {
