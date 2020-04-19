@@ -1,7 +1,9 @@
 // @ts-check
 /* eslint-disable @typescript-eslint/no-var-requires */
 const { resolve } = require("path");
-const { HotModuleReplacementPlugin, DefinePlugin, } = require("webpack");
+const {
+  HotModuleReplacementPlugin, DefinePlugin,
+} = require("webpack");
 const TerserPlugin = require("terser-webpack-plugin");
 
 const isDevMode = process.env.NODE_ENV !== "production";
@@ -18,12 +20,12 @@ const createModule = (target = "ES5") => ({
           options: {
             compilerOptions: {
               target,
-            }
-          }
-        }
+            },
+          },
+        },
       ],
-    }
-  ]
+    },
+  ],
 });
 
 /** @type {import("webpack").Configuration} */
@@ -31,7 +33,7 @@ const commonConfig = {
   mode: isDevMode ? "development" : "production",
   devtool: "source-map",
   resolve: {
-    extensions: [".ts", ".tsx", ".js"]
+    extensions: [".ts", ".tsx", ".js"],
   },
 };
 
@@ -52,7 +54,7 @@ const createClientConfig = (name, target = "ES5") => {
           sourceMap: true,
           terserOptions: {
             ecma: 2019,
-          }
+          },
         }),
       ],
     },
@@ -75,7 +77,7 @@ const serverConfig = {
   optimization: {
     minimize: false,
   },
-  plugins: [new DefinePlugin({BUILD_DATE: `${new Number(new Date())}`})]
+  plugins: [new DefinePlugin({ BUILD_DATE: `${new Number(new Date())}` })],
 };
 
 module.exports = [createClientConfig("modern", "ES2019"), createClientConfig("legacy", "ES5"), serverConfig];

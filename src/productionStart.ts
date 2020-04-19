@@ -22,7 +22,7 @@ if (cluster.isMaster) {
     console.warn(`Worker ${worker.id} exited with code ${code} and signal ${signal}.`);
     cluster.fork();
   });
-} else{
+} else {
   const app = express();
   app.disable("etag");
   app.disable("x-powered-by");

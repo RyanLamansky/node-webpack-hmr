@@ -54,9 +54,7 @@ app
   .use(serverWebpackDevMiddleware)
   .use(webpackHotMiddleware(modernCompiler))
   .use(webpackHotMiddleware(legacyCompiler))
-  .use(webpackHotMiddleware(serverCompiler))
-  ;
-
+  .use(webpackHotMiddleware(serverCompiler));
 let serverHash = "";
 
 /** @type {(req, res) => Promise} */
@@ -69,7 +67,7 @@ app.use((req, res) => {
   if (serverHash !== res.locals.webpackStats.hash) {
     // @ts-ignore: At the time of writing, `emitWarning` was typed incorrectly.
     const memoryServer = new runtimeModule();
-    memoryServer._compile(res.locals.fs.readFileSync(res.locals.webpackStats.toJson().outputPath + "/server.js", "utf8"), "");
+    memoryServer._compile(res.locals.fs.readFileSync(`${res.locals.webpackStats.toJson().outputPath}/server.js`, "utf8"), "");
     server = memoryServer.exports.default;
     serverHash = res.locals.webpackStats.hash;
   }
@@ -79,20 +77,18 @@ app.use((req, res) => {
   try {
     try {
       return server(req, res);
-    }
-    catch (reason) {
+    } catch (reason) {
       console.warn(reason);
       res.status(500).send(reason);
     }
-  }
-  catch (e) {
+  } catch (e) {
     console.warn(e);
     res.status(500).contentType("text/plain").send("An error occurred while processing this request.");
   }
 });
 
 const originalEmitWarning = process.emitWarning;
-process.emitWarning = function (warning, type, code) {
+process.emitWarning = function(warning, type, code) {
   // @ts-ignore: At the time of writing, `emitWarning` was typed incorrectly.
   if (code === "DEP0097") {
     return;
@@ -102,12 +98,12 @@ process.emitWarning = function (warning, type, code) {
 };
 
 modernWebpackDevMiddleware.waitUntilValid(() =>
-legacyWebpackDevMiddleware.waitUntilValid(() =>
-  serverWebpackDevMiddleware.waitUntilValid(() => {
-    const port = 3000;
-    app.listen(port, () => {
-      console.log(`Startup complete, listening on port ${port}.`);
-      console.timeEnd(timerName);
-    });
-  })
-));
+  legacyWebpackDevMiddleware.waitUntilValid(() =>
+    serverWebpackDevMiddleware.waitUntilValid(() => {
+      const port = 3000;
+      app.listen(port, () => {
+        console.log(`Startup complete, listening on port ${port}.`);
+        console.timeEnd(timerName);
+      });
+    })
+  ));
