@@ -1,7 +1,7 @@
 // @ts-check
 /* eslint-disable @typescript-eslint/no-var-requires */
 const { resolve } = require("path");
-const { HotModuleReplacementPlugin, } = require("webpack");
+const { HotModuleReplacementPlugin, DefinePlugin, } = require("webpack");
 
 const isDevMode = process.env.NODE_ENV !== "production";
 
@@ -63,6 +63,7 @@ const serverConfig = {
   optimization: {
     minimize: false,
   },
+  plugins: [new DefinePlugin({BUILD_DATE: `${new Number(new Date())}`})]
 };
 
 module.exports = [createClientConfig("modern", "ES2019"), createClientConfig("legacy", "ES5"), serverConfig];
