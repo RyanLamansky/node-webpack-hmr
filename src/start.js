@@ -1,3 +1,4 @@
+// @ts-check
 const timerName = 'Startup';
 console.time(timerName);
 console.log('Starting...');
@@ -28,6 +29,7 @@ const clientWebpackDevMiddleware = webpackDevMiddleware(clientCompiler, {
 });
 
 const serverWebpackDevMiddleware = webpackDevMiddleware(serverCompiler, {
+  publicPath: '/', // Not actually needed but the current version of the types require it.
   stats,
   serverSideRender: true,
 });
@@ -53,6 +55,7 @@ const runtimeModule = require('module');
 
 app.use(async (req, res) => {
   if (serverHash !== res.locals.webpackStats.hash) {
+    // @ts-ignore: At the time of writing, `emitWarning` was typed incorrectly.
     const memoryServer = new runtimeModule();
     memoryServer._compile(res.locals.fs.readFileSync(res.locals.webpackStats.toJson().outputPath + '/server.js', 'utf8'), '');
     server = memoryServer.exports.default;
@@ -77,12 +80,13 @@ app.use(async (req, res) => {
 });
 
 const originalEmitWarning = process.emitWarning;
-process.emitWarning = function (warning, type, code, ctor, now) {
+process.emitWarning = function (warning, type, code) {
+  // @ts-ignore: At the time of writing, `emitWarning` was typed incorrectly.
   if (code === 'DEP0097') {
     return;
   }
 
-  originalEmitWarning(warning, type, code, ctor, now);
+  originalEmitWarning(warning, type, code);
 }
 
 clientWebpackDevMiddleware.waitUntilValid(() =>

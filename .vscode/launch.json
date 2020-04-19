@@ -4,7 +4,7 @@
     {
       "type": "node",
       "request": "launch",
-      "name": "Launch Program",
+      "name": "Run Development Mode",
       "program": "${workspaceFolder}/src/start.js",
       "cwd": "${workspaceFolder}/src/"
     },
