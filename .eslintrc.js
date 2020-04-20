@@ -1,3 +1,7 @@
+// @ts-check
+// Command line: node node_modules/eslint/bin/eslint.js --ext .js,.ts,.tsx .
+// The Visual Studio Code ESLint plugin will show problems in the IDE as you work.
+
 module.exports = {
   root: true,
   env: {
@@ -14,7 +18,11 @@ module.exports = {
     'plugin:@typescript-eslint/recommended',
   ],
   rules: {
+    // ESLint rules: https://eslint.org/docs/rules/
+    // TypeScript rules: https://github.com/typescript-eslint/typescript-eslint/tree/master/packages/eslint-plugin
+    // Sometimes the ESLint mishandles TypeScript structures and TypeScript rules must be used instead.
     "@typescript-eslint/explicit-function-return-type": "off",
+    "@typescript-eslint/semi": "warn",
     "array-bracket-spacing": "warn",
     "array-callback-return": "warn",
     "arrow-spacing": "warn",
@@ -55,7 +63,7 @@ module.exports = {
     "quote-props": ["warn", "as-needed"],
     "require-await": "warn",
     "rest-spread-spacing": "warn",
-    "semi": "warn",
+    // "semi": "warn", // Conflicts with @typescript-eslint/semi.
     "semi-spacing": "warn",
     "semi-style": "warn",
     "sort-imports": "warn",
