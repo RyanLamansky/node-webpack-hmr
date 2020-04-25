@@ -19,6 +19,8 @@
     "webpack-hot-middleware": "^2.25.0"
   },
   "scripts": {
+    "build": "webpack --mode production",
+    "lint": "eslint --ext .js,.ts,.tsx .",
     "test": "jest"
   }
 }

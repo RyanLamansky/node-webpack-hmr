@@ -7,9 +7,16 @@ const {
 } = require("webpack");
 const TerserPlugin = require("terser-webpack-plugin");
 
-const isDevMode = process.env.NODE_ENV !== "production";
+const isProduction = process.env.NODE_ENV === "production" || (() => {
+  const { argv } = process;
+  const mode = argv.indexOf("--mode");
+  if (mode > 0) {
+    return argv[mode + 1] === "production";
+  }
+  return false;
+})();
 
-console.log(`Webpack running in ${isDevMode ? "development" : "production"} mode.`);
+console.log(`Webpack running in ${isProduction ? "production" : "development"} mode.`);
 
 const createModule = (target = "ES5") => ({
   rules: [
@@ -31,7 +38,7 @@ const createModule = (target = "ES5") => ({
 
 /** @type {import("webpack").Configuration} */
 const commonConfig = {
-  mode: isDevMode ? "development" : "production",
+  mode: isProduction ? "production" : "development",
   devtool: "source-map",
   resolve: {
     extensions: [".ts", ".tsx", ".js"],
@@ -43,12 +50,12 @@ const createClientConfig = (name, target = "ES5") => {
   const clientConfig = {
     ...commonConfig,
     module: createModule(target),
-    entry: isDevMode ? ["webpack-hot-middleware/client", "./entry/client.ts"] : ["./entry/client.ts"],
+    entry: isProduction ? ["./src/entry/client.ts"] : ["webpack-hot-middleware/client", "./src/entry/client.ts"],
     output: {
-      path: resolve(__dirname, isDevMode ? "client" : "build/client"),
+      path: resolve(__dirname, "build/client"),
       filename: `${name}.js`,
     },
-    plugins: isDevMode ? [new HotModuleReplacementPlugin()] : [],
+    plugins: isProduction ? [] : [new HotModuleReplacementPlugin()],
     optimization: {
       minimizer: [
         new TerserPlugin({
@@ -66,12 +73,12 @@ const createClientConfig = (name, target = "ES5") => {
 /** @type {import("webpack").Configuration} */
 const serverConfig = {
   ...commonConfig,
-  devtool: isDevMode ? undefined : "source-map",
+  devtool: isProduction ? "source-map" : undefined,
   module: createModule("ES2019"),
-  entry: isDevMode ? "./entry/server.ts" : "./productionStart.ts",
+  entry: isProduction ? "./src/productionStart.ts" : "./src/entry/server.ts",
   output: {
     libraryTarget: "commonjs",
-    path: resolve(__dirname, isDevMode ? "server" : "build/server"),
+    path: resolve(__dirname, "build/server"),
     filename: "server.js",
   },
   target: "node",

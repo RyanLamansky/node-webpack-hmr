@@ -18,9 +18,13 @@ if (cluster.isMaster) {
     });
   });
 
+  cluster.on("disconnect", worker => {
+    console.warn(`Worker ${worker.id} disconnected and will be replaced.`);
+    cluster.fork();
+  });
+
   cluster.on("exit", (worker, code, signal) => {
     console.warn(`Worker ${worker.id} exited with code ${code} and signal ${signal}.`);
-    cluster.fork();
   });
 } else {
   const app = express();

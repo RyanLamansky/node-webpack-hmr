@@ -6,7 +6,7 @@ const timerName = "Startup";
 console.time(timerName);
 console.log("Starting...");
 
-const webpackConfig = require("./webpack.config");
+const webpackConfig = require("../webpack.config");
 const modernConfig = webpackConfig[0];
 const legacyConfig = webpackConfig[1];
 const serverConfig = webpackConfig[2];

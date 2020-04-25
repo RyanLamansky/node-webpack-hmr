@@ -6,7 +6,7 @@
       "request": "launch",
       "name": "Run Development Mode",
       "program": "${workspaceFolder}/src/start.js",
-      "cwd": "${workspaceFolder}/src/",
+      "cwd": "${workspaceFolder}/",
       "runtimeArgs": [
         "--unhandled-rejections=warn",
       ],
@@ -16,7 +16,7 @@
       "request": "launch",
       "name": "Build Production",
       "program": "${workspaceFolder}/node_modules/webpack/bin/webpack.js",
-      "cwd": "${workspaceFolder}/src/",
+      "cwd": "${workspaceFolder}/",
       "env": {
         "NODE_ENV": "production"
       },
@@ -25,8 +25,8 @@
       "type": "node",
       "request": "launch",
       "name": "Run Production",
-      "program": "${workspaceFolder}/src/build/server/server.js",
-      "cwd": "${workspaceFolder}/src/build/",
+      "program": "${workspaceFolder}/build/server/server.js",
+      "cwd": "${workspaceFolder}/build/",
       "runtimeArgs": [
         "--enable-source-maps",
         "--unhandled-rejections=strict",

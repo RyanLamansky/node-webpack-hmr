@@ -8,6 +8,8 @@ It's intended to be useful for beginners and experts alike.
 - Add any front-end framework you want, the template includes nothing
 - Build & run configuration included for Visual Studio Code
 - JS bundles are assembled by Webpack
+- Jest is used for tests
+- ESLint is used for code quality
 - Hot module replacement enabled for both server-side and client-side JS bundles
 - TypeScript-enabled
 - Modern browsers receive ES2019 code, legacy ones receive ES5, meaning Internet Explorer 11 can work
