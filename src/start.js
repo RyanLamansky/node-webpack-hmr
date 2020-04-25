@@ -1,5 +1,6 @@
 // @ts-check
 /* eslint-disable @typescript-eslint/no-var-requires */
+/* eslint-disable @typescript-eslint/no-require-imports */
 /* eslint-disable @typescript-eslint/ban-ts-ignore */
 const timerName = "Startup";
 console.time(timerName);
@@ -57,13 +58,13 @@ app
   .use(webpackHotMiddleware(serverCompiler));
 let serverHash = "";
 
-/** @type {(req, res) => Promise} */
+/** @type {(req: import("express").Request, res: import("express").Response) => (Promise | void)} */
 let server = null;
 
 const domain = require("domain");
 const runtimeModule = require("module");
 
-app.use((req, res) => {
+app.use(async (req, res) => {
   if (serverHash !== res.locals.webpackStats.hash) {
     // @ts-ignore: At the time of writing, `emitWarning` was typed incorrectly.
     const memoryServer = new runtimeModule();
@@ -76,7 +77,7 @@ app.use((req, res) => {
   d.enter();
   try {
     try {
-      return server(req, res);
+      return await server(req, res);
     } catch (reason) {
       console.warn(reason);
       res.status(500).send(reason);
@@ -87,7 +88,7 @@ app.use((req, res) => {
   }
 });
 
-const originalEmitWarning = process.emitWarning;
+const originalEmitWarning = process.emitWarning.bind(process);
 process.emitWarning = function(warning, type, code) {
   // @ts-ignore: At the time of writing, `emitWarning` was typed incorrectly.
   if (code === "DEP0097") {
