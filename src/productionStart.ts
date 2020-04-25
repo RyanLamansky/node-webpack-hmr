@@ -1,4 +1,5 @@
 import cluster from "cluster";
+import compression from "compression";
 import { cpus } from "os";
 import express from "express";
 import server from "./entry/server";
@@ -31,6 +32,7 @@ if (cluster.isMaster) {
   app.disable("etag");
   app.disable("x-powered-by");
 
+  app.use(compression());
   app.use(express.static("client"));
   app.use(server);
 
