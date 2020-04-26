@@ -76,9 +76,9 @@ const createClientConfig = (name, target = "ES5") => {
         openAnalyzer: false,
         reportFilename: "webpack-bundle-analyzer.html",
       }));
-    } else {
-      clientConfig.plugins.push(new HotModuleReplacementPlugin());
     }
+  } else {
+    clientConfig.plugins.push(new HotModuleReplacementPlugin());
   }
 
   return clientConfig;
