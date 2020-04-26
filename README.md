@@ -13,7 +13,8 @@ It's intended to be useful for beginners and experts alike.
 - Hot module replacement enabled for both server-side and client-side JS bundles
 - TypeScript-enabled
 - Modern browsers receive ES2019 code, legacy ones receive ES5, meaning Internet Explorer 11 can work
-- Production builds use Node's cluster API for higher concurrency and resilience to faults.
+- Production builds use Node's cluster API for higher concurrency and resilience to faults
+- `webpack-bundle-analyzer` shows how much space different packages are consuming in your bundle
 
 ## Getting Started
 
@@ -46,7 +47,7 @@ Webpack and TypeScript support ES6-style `import` statements, allowing you to ac
 The included configuration supports JavaScript (.js), TypeScript (.ts) and TypeScript with React JSX (.tsx) source files.
 .js files are processed directly by Webpack, with minimal transpilation support.
 To use newer JS syntax in a way compatible with older browsers, you'll need to use TypeScript's "allowJs" feature or integrate Babel.
-.ts/.tsx files are processed by TypeScript and initially configured to produce Internet Explorer 11-compatible "ES5" output syntax.
+.ts/.tsx files are processed by TypeScript and initially configured to produce Internet Explorer 11-compatible "ES5" output syntax and modern syntax in separate bundles.
 
 To support additional file formats, they'll need to be configured in webpack.config.js, which will likely require adding new loaders to the package.json.
 

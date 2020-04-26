@@ -6,6 +6,7 @@ const {
   HotModuleReplacementPlugin, DefinePlugin,
 } = require("webpack");
 const TerserPlugin = require("terser-webpack-plugin");
+const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
 
 const isProduction = process.env.NODE_ENV === "production" || (() => {
   const { argv } = process;
@@ -55,7 +56,7 @@ const createClientConfig = (name, target = "ES5") => {
       path: resolve(__dirname, "build/client"),
       filename: `${name}.js`,
     },
-    plugins: isProduction ? [] : [new HotModuleReplacementPlugin()],
+    plugins: [],
     optimization: {
       minimizer: [
         new TerserPlugin({
@@ -67,6 +68,19 @@ const createClientConfig = (name, target = "ES5") => {
       ],
     },
   };
+
+  if (isProduction) {
+    if (name === "modern") {
+      clientConfig.plugins.push(new BundleAnalyzerPlugin({
+        analyzerMode: "static",
+        openAnalyzer: false,
+        reportFilename: "webpack-bundle-analyzer.html",
+      }));
+    } else {
+      clientConfig.plugins.push(new HotModuleReplacementPlugin());
+    }
+  }
+
   return clientConfig;
 };
 
