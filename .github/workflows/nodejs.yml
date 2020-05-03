@@ -4,14 +4,20 @@ name: Node.js CI
 
 on: [push, pull_request]
 
+# As a project grows, the time it takes to run the lint, test, and build will all increase.
+# Separate jobs for each allow these to run in parallel, reducing the overall run time.
+# There's some overhead for the repetition of the shared steps.
+# For public Github repositories where build time is free, this overhead is inconsequential.
+# For private repositories, this will slightly increase build minutes used.
+# So, for large private repositories, you may want to switch to self-hosted action runners.
+
 jobs:
   test:
     runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v2
-    - name: Use Node.js 12.x
-      uses: actions/setup-node@v1
+    - uses: actions/setup-node@v1
       with:
         node-version: 12.x
     - uses: actions/cache@v1
@@ -28,8 +34,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Use Node.js 12.x
-      uses: actions/setup-node@v1
+    - uses: actions/setup-node@v1
       with:
         node-version: 12.x
     - uses: actions/cache@v1
@@ -46,8 +51,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Use Node.js 12.x
-      uses: actions/setup-node@v1
+    - uses: actions/setup-node@v1
       with:
         node-version: 12.x
     - uses: actions/cache@v1
