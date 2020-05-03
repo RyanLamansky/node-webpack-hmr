@@ -24,7 +24,8 @@
   },
   "scripts": {
     "build": "webpack --mode production",
-    "lint": "eslint --ext .js,.ts,.tsx .",
-    "test": "jest"
+    "lint": "eslint --max-warnings=0 --ext .js,.cjs,.mjs,.jsx,.ts,.tsx .",
+    "test": "jest",
+    "test:ci": "jest --ci"
   }
 }

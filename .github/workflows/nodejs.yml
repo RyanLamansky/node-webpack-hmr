@@ -27,7 +27,7 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-node-
     - run: npm ci
-    - run: npm test
+    - run: npm run test:ci
 
   lint:
     runs-on: ubuntu-latest

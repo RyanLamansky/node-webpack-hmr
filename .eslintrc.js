@@ -25,7 +25,7 @@ module.exports = {
   rules: {
     // ESLint rules: https://eslint.org/docs/rules/
     // TypeScript rules: https://github.com/typescript-eslint/typescript-eslint/tree/master/packages/eslint-plugin
-    // Sometimes the ESLint mishandles TypeScript structures and TypeScript rules must be used instead.
+    // Sometimes the ESLint rule mishandles TypeScript structures and TypeScript rules must be used instead.
     "@typescript-eslint/brace-style": "warn",
     "@typescript-eslint/comma-spacing": "warn",
     "@typescript-eslint/default-param-last": "warn",
@@ -38,11 +38,13 @@ module.exports = {
     "@typescript-eslint/restrict-plus-operands": "warn",
     "@typescript-eslint/no-base-to-string": "warn",
     "@typescript-eslint/no-dupe-class-members": "warn",
+    "@typescript-eslint/no-empty-interface": "warn",
     "@typescript-eslint/no-extra-non-null-assertion": "warn",
     "@typescript-eslint/no-extra-semi": "warn",
     "@typescript-eslint/no-extraneous-class": "warn",
     "@typescript-eslint/no-floating-promises": "warn",
     "@typescript-eslint/no-implied-eval": "warn",
+    "@typescript-eslint/no-namespace": "warn",
     "@typescript-eslint/no-non-null-asserted-optional-chain": "warn",
     "@typescript-eslint/no-require-imports": "warn",
     "@typescript-eslint/no-throw-literal": "warn",
