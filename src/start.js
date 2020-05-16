@@ -88,16 +88,6 @@ app.use(async (req, res) => {
   }
 });
 
-const originalEmitWarning = process.emitWarning.bind(process);
-process.emitWarning = function(warning, type, code) {
-  // @ts-ignore: At the time of writing, `emitWarning` was typed incorrectly.
-  if (code === "DEP0097") {
-    return;
-  }
-
-  originalEmitWarning(warning, type, code);
-};
-
 modernWebpackDevMiddleware.waitUntilValid(() =>
   legacyWebpackDevMiddleware.waitUntilValid(() =>
     serverWebpackDevMiddleware.waitUntilValid(() => {

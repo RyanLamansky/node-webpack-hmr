@@ -84,6 +84,7 @@ module.exports = {
     "no-lonely-if": "warn",
     "no-multi-spaces": "warn",
     "no-multiple-empty-lines": ["warn", { "max": 1 }],
+    "no-new-wrappers": "warn",
     "no-return-await": "off", // Replaced by @typescript-eslint/return-await.
     "no-trailing-spaces": "warn",
     "no-unneeded-ternary": "warn",

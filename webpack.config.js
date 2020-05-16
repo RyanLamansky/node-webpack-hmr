@@ -99,7 +99,7 @@ const serverConfig = {
   optimization: {
     minimize: false,
   },
-  plugins: [new DefinePlugin({ BUILD_DATE: `${new Number(new Date())}` })],
+  plugins: [new DefinePlugin({ BUILD_DATE: new Date().getTime() })],
 };
 
 module.exports = [createClientConfig("modern", "ES2019"), createClientConfig("legacy", "ES5"), serverConfig];
