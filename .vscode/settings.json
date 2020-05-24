@@ -6,5 +6,6 @@
   },
   "javascript.format.semicolons": "insert",
   "javascript.preferences.quoteStyle": "double",
-  "typescript.preferences.quoteStyle": "double"
+  "typescript.preferences.quoteStyle": "double",
+  "typescript.tsdk": "./node_modules/typescript/lib"
 }

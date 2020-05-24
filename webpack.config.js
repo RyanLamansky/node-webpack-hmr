@@ -46,6 +46,9 @@ const commonConfig = {
   },
 };
 
+/**
+ * @param {string} name
+ */
 const createClientConfig = (name, target = "ES5") => {
   /** @type {import("webpack").Configuration} */
   const clientConfig = {

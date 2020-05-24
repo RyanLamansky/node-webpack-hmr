@@ -8,7 +8,7 @@ const checkCompatibilityName = `/checkCompatibility-${crypto.createHash("md5").u
 
 const bundleLoader = `<script defer onload="var s=document.createElement('script');s.src=(window['.Modern']?'/modern':'/legacy')+'.js?${BUILD_DATE}';s.defer=true;document.body.appendChild(s);" src="${checkCompatibilityName}"></script>`;
 
-export default function server(request: Request, response: Response) {
+export default function server(request: Request, response: Response): void | Promise<void> {
   try {
     switch (request.path) {
     case "/":

@@ -15,6 +15,12 @@
     "pretty": true,
     "strict": true,
   },
+  "include": [
+    "**/*.ts",
+    "**/*.tsx",
+    ".eslintrc.js",
+    "**/*.js"
+  ],
   "exclude": [
     "node_modules"
   ],

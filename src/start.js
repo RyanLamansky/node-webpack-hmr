@@ -1,7 +1,12 @@
 // @ts-check
 /* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable @typescript-eslint/no-require-imports */
-/* eslint-disable @typescript-eslint/ban-ts-ignore */
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+// A lot of ESLint rules are disabled due to type information limitations in 3rd party libraries or for Node compatibility.
 const timerName = "Startup";
 console.time(timerName);
 console.log("Starting...");
@@ -58,16 +63,18 @@ app
   .use(webpackHotMiddleware(serverCompiler));
 let serverHash = "";
 
-/** @type {(req: import("express").Request, res: import("express").Response) => (Promise | void)} */
+/** @type {(req: import("express").Request, res: import("express").Response) => (Promise<void> | void)} */
 let server = null;
 
 const domain = require("domain");
 const runtimeModule = require("module");
 
 app.use(async (req, res) => {
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
   if (serverHash !== res.locals.webpackStats.hash) {
-    // @ts-ignore: At the time of writing, `emitWarning` was typed incorrectly.
+    // @ts-expect-error: At the time of writing, `runtimeModule` incorrectly required the "id" parameter.
     const memoryServer = new runtimeModule();
+    // @ts-expect-error: At the time of writing, the `_compile` wasn't included in the definition.
     memoryServer._compile(res.locals.fs.readFileSync(`${res.locals.webpackStats.toJson().outputPath}/server.js`, "utf8"), "");
     server = memoryServer.exports.default;
     serverHash = res.locals.webpackStats.hash;
