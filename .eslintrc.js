@@ -57,6 +57,7 @@ module.exports = {
     "@typescript-eslint/no-unsafe-member-access": "warn",
     "@typescript-eslint/no-unsafe-return": "warn",
     "@typescript-eslint/no-unused-expressions": "warn",
+    "@typescript-eslint/no-unused-vars": "off", // Covered by the TypeScript compiler configuration.
     "@typescript-eslint/no-useless-constructor": "warn",
     "@typescript-eslint/quotes": ["warn", "double"],
     "@typescript-eslint/require-await": "warn",

@@ -1,7 +1,7 @@
 // @ts-check
 /* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable @typescript-eslint/no-require-imports */
-const { resolve } = require("path");
+const path = require("path");
 const {
   HotModuleReplacementPlugin, DefinePlugin,
 } = require("webpack");
@@ -56,7 +56,7 @@ const createClientConfig = (name, target = "ES5") => {
     module: createModule(target),
     entry: isProduction ? ["./src/entry/client.ts"] : ["webpack-hot-middleware/client", "./src/entry/client.ts"],
     output: {
-      path: resolve(__dirname, "build/client"),
+      path: path.resolve(__dirname, "build/client"),
       filename: `${name}.js`,
     },
     plugins: [],
@@ -95,7 +95,7 @@ const serverConfig = {
   entry: isProduction ? "./src/productionStart.ts" : "./src/entry/server.ts",
   output: {
     libraryTarget: "commonjs",
-    path: resolve(__dirname, "build/server"),
+    path: path.resolve(__dirname, "build/server"),
     filename: "server.js",
   },
   target: "node",

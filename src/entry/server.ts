@@ -1,10 +1,10 @@
 import {
   Request, Response,
 } from "express";
-import crypto from "crypto";
+import { createHash } from "crypto";
 
 const checkCompatibilityCode = "(async()=>{})();window['.Modern']=1;";
-const checkCompatibilityName = `/checkCompatibility-${crypto.createHash("md5").update(checkCompatibilityCode).digest("hex")}.js`;
+const checkCompatibilityName = `/checkCompatibility-${createHash("md5").update(checkCompatibilityCode).digest("hex")}.js`;
 
 const bundleLoader = `<script defer onload="var s=document.createElement('script');s.src=(window['.Modern']?'/modern':'/legacy')+'.js?${BUILD_DATE}';s.defer=true;document.body.appendChild(s);" src="${checkCompatibilityName}"></script>`;
 
